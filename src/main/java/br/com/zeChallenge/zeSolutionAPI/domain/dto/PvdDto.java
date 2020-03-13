@@ -3,17 +3,18 @@ package br.com.zeChallenge.zeSolutionAPI.domain.dto;
 import br.com.zeChallenge.zeSolutionAPI.domain.Address;
 import br.com.zeChallenge.zeSolutionAPI.domain.CoverageArea;
 import br.com.zeChallenge.zeSolutionAPI.domain.Pvd;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.mapbox.geojson.MultiPolygon;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.awt.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@EqualsAndHashCode
 @Data
+@NoArgsConstructor
 public class PvdDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -27,12 +28,15 @@ public class PvdDto implements Serializable {
     public Pvd convertToPvd(){
         Pvd pvd = new Pvd();
         Point point = new Point(this.getAddress().getCoordinates().get(0).intValue(), this.getAddress().getCoordinates().get(1).intValue());
+        Address address = new Address();
+        address.setCoordinates(point);
+        address.setType(this.getAddress().getType());
 
         pvd.setTradingName(this.getTradingName());
         pvd.setOwnerName(this.getOwnerName());
         pvd.setDocument(this.getDocument());
-        pvd.setAddress(new Address(this.getAddress().getType(),point));
-        pvd.setCoverageArea(this.convertToCoverageArea());
+        pvd.setAddress(address);
+        pvd.setCoverageArea(convertToCoverageArea());
         return pvd;
     }
 
@@ -40,10 +44,14 @@ public class PvdDto implements Serializable {
         CoverageArea coverageArea = new CoverageArea();
         List<Point> pointList = new ArrayList<>();
         List<List<List<Point>>> multiPolygon = new ArrayList<>();
+        Polygon polygon = new Polygon();
 
-     //   this.getCoverageArea().getCoordinates().get(0).get(0).forEach(point -> { pointList.add(new Point(point.get(0), point.get(1))); });
+        this.getCoverageArea().getCoordinates().get(0).get(0).forEach(point -> {
+            pointList.add(new Point(point.get(0), point.get(1)));
+            polygon.addPoint(point.get(0), point.get(1));
+        });
         coverageArea.setType(this.coverageArea.getType());
-   //     coverageArea.setCoordinates(multiPolygon);
+        coverageArea.setCoordinates(polygon);
         return coverageArea;
     }
 }

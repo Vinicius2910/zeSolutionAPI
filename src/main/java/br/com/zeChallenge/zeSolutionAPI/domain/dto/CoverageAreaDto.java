@@ -1,6 +1,5 @@
 package br.com.zeChallenge.zeSolutionAPI.domain.dto;
 
-import com.mapbox.geojson.MultiPolygon;
 import lombok.Data;
 
 import java.util.List;

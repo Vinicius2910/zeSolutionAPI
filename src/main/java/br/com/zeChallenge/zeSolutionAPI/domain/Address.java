@@ -19,9 +19,4 @@ public class Address {
     private String type;
     private Point coordinates;
 
-    public Address(String type, Point coordinates){
-        this.id =  null;
-        this.type = type;
-        this.coordinates =  coordinates;
-    }
 }

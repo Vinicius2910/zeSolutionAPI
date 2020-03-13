@@ -1,7 +1,6 @@
 package br.com.zeChallenge.zeSolutionAPI.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,13 +23,12 @@ public class Pvd implements Serializable {
     @Column(name="owner_name")
     private String ownerName;
 
-    @Column(name="document")
+    @Column(name="document", unique = true)
     private String document;
 
     @OneToOne
     private Address address;
 
-    @OneToMany
+    @OneToOne
     private CoverageArea coverageArea;
-
 }

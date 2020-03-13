@@ -17,9 +17,9 @@ public class CoverageArea {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String type;
-    private List<List<List<Point>>> coordinates;
+    private Polygon coordinates;
 
-    public CoverageArea(String type, List<List<List<Point>>> coordinates){
+    public CoverageArea(String type, Polygon coordinates){
         this.id =  null;
         this.type = type;
         this.coordinates =  coordinates;
